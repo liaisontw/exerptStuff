@@ -13,7 +13,7 @@
  * @package           Excerpt_Stuff
  *
  * @wordpress-plugin
- * Plugin Name:       excerpt stuff
+ * Plugin Name:       Excerpt Stuff
  * Plugin URI:        https://github.com/liaisontw/excerptstuff
  * Description:       This is a description of the plugin.
  * Version:           1.0.0
