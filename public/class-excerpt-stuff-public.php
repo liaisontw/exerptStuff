@@ -107,7 +107,11 @@ class Excerpt_Stuff_Public {
 	}
 
 	public function excerpt_stuff_add_excerpt($excerpt) {
-		$excerpt = '...test...test...test';
+		if ('yes' == get_option( 'excert_stuff_active' ) )  {
+			$excerpt = '...test...test...test';
+		}else{
+			$excerpt = null;
+		}
 
         return $excerpt;
 	}
