@@ -34,11 +34,16 @@ class Excerpt_Stuff_i18n {
 	 */
 	public function load_plugin_textdomain() {
 
-		load_plugin_textdomain(
-			'excerpt-stuff',
-			false,
-			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
-		);
+	/*
+	 * load_plugin_textdomain() has been discouraged 
+	 * since WordPress version 4.6. 
+	 * When your plugin is hosted on WordPress.org, 
+	 * you no longer need to manually include this 
+	 * function call for translations under your plugin slug. 
+	 * WordPress will automatically load the translations 
+	 * for you as needed.
+	 */
+
 
 	}
 

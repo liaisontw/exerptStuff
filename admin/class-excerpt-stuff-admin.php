@@ -183,6 +183,8 @@ class Excerpt_Stuff_Admin {
 					<tr class="excert_stuff_setting">
 						<th><label><?php esc_html_e( " Excert Text Padding", 'excert-stuff' ); ?></label></th>
 						<td><select name="Excerpt Text Padding">
+							<option value="padding_9">..</option>
+  							<option value="padding_0">__</option>
   							<option value="padding_1">==</option>
   							<option value="padding_2">--</option>
   							<option value="padding_3">**</option>

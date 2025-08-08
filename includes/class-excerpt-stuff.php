@@ -75,7 +75,7 @@ class Excerpt_Stuff {
 		$this->plugin_name = 'excerpt-stuff';
 
 		$this->load_dependencies();
-		$this->set_locale();
+		//$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 
@@ -137,9 +137,17 @@ class Excerpt_Stuff {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Excerpt_Stuff_i18n();
-
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+		//$plugin_i18n = new Excerpt_Stuff_i18n();
+		//$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+			/*
+			* load_plugin_textdomain() has been discouraged 
+			* since WordPress version 4.6. 
+			* When your plugin is hosted on WordPress.org, 
+			* you no longer need to manually include this 
+			* function call for translations under your plugin slug. 
+			* WordPress will automatically load the translations 
+			* for you as needed.
+			*/
 
 	}
 
