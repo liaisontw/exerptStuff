@@ -100,4 +100,16 @@ class Excerpt_Stuff_Public {
 
 	}
 
+	public function init_excerpt_stuff() {
+		if (wp_validate_boolean( get_option( 'excert_stuff_active' ) ) )  {
+			add_filter( 'excerpt_more', array($this, 'excerpt_stuff_add_excerpt'), 999 );
+		}
+	}
+
+	public function excerpt_stuff_add_excerpt($excerpt) {
+		$excerpt = '...test...test...test';
+
+        return $excerpt;
+	}
+	
 }

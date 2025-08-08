@@ -30,6 +30,7 @@ class Excerpt_Stuff_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
+		add_option( 'excert_stuff_active', 'yes' );
 	}
 
 }
