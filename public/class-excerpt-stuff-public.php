@@ -108,7 +108,9 @@ class Excerpt_Stuff_Public {
 
 	public function excerpt_stuff_add_excerpt($excerpt) {
 		if ('yes' == get_option( 'excert_stuff_active' ) )  {
-			$excerpt = '...test...test...test';
+			$text = get_option( 'excert_stuff_excerpt_text' );
+			$padding = get_option( 'excert_stuff_excerpt_padding' );
+			$excerpt = str_replace(' ', $padding, $text);
 		}else{
 			$excerpt = null;
 		}
