@@ -101,15 +101,15 @@ class Excerpt_Stuff_Public {
 	}
 
 	public function init_excerpt_stuff() {
-		if (wp_validate_boolean( get_option( 'excert_stuff_active' ) ) )  {
+		if (wp_validate_boolean( get_option( 'excerpt_stuff_active' ) ) )  {
 			add_filter( 'excerpt_more', array($this, 'excerpt_stuff_add_excerpt'), 999 );
 		}
 	}
 
 	public function excerpt_stuff_add_excerpt($excerpt) {
-		if ('yes' == get_option( 'excert_stuff_active' ) )  {
-			$text = get_option( 'excert_stuff_excerpt_text' );
-			$padding = get_option( 'excert_stuff_excerpt_padding' );
+		if ('yes' == get_option( 'excerpt_stuff_active' ) )  {
+			$text = get_option( 'excerpt_stuff_excerpt_text' );
+			$padding = get_option( 'excerpt_stuff_excerpt_padding' );
 			$excerpt = str_replace(' ', $padding, $text);
 		}else{
 			$excerpt = null;
