@@ -31,6 +31,8 @@ class Excerpt_Stuff_Activator {
 	 */
 	public static function activate() {
 		add_option( 'excert_stuff_active', 'yes' );
+		add_option( 'excert_stuff_excerpt_text', 'Read More' );
+		add_option( 'excert_stuff_excerpt_padding', '0' );
 	}
 
 }

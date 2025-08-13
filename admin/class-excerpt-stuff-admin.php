@@ -119,20 +119,32 @@ class Excerpt_Stuff_Admin {
 
 	public function excert_stuff_menu_options() {
 		$excert_stuff_active = get_option( 'excert_stuff_active' );
-		$excert_stuff_excerpt_text = get_option( '$excert_stuff_excerpt_text' );
-		if ( !$excert_stuff_active ) $excert_stuff_active = 'yes';
-		if ( !$excert_stuff_excerpt_text ) $excert_stuff_excerpt_text = 'Read More';
+		$excert_stuff_excerpt_text = get_option( 'excert_stuff_excerpt_text' );
+		$excert_stuff_excerpt_padding = get_option( 'excert_stuff_excerpt_padding' );
+		//if ( !$excert_stuff_active ) $excert_stuff_active = 'yes';
+		//if ( !$excert_stuff_excerpt_text ) $excert_stuff_excerpt_text = 'Read More';
+		//$excert_stuff_excerpt_padding = '4';
+		//var_dump($excert_stuff_excerpt_padding);
 		
 		if ( isset($_POST[ 'excert_stuff_submit_hidden' ]) && $_POST[ 'excert_stuff_submit_hidden' ] == 'Y' ) {
 			if ( isset( $_POST['excert_html_nonce'] ) && !wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['excert_html_nonce'] ) ), 'excert-html-nonce' ) ) {
 				wp_die( esc_html( 'Form failed nonce verification.' ) );
 			}
-			if ( isset( $_POST[ 'excert_stuff_active' ] ) ) $excert_stuff_active = filter_var ( wp_unslash( $_POST[ 'excert_stuff_active' ] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ); else $excert_stuff_active = 'yes';
+			if ( isset( $_POST[ 'excert_stuff_active' ] ) ) 
+				$excert_stuff_active = filter_var ( wp_unslash( $_POST[ 'excert_stuff_active' ] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ); 
+			else $excert_stuff_active = 'yes';
 			update_option( 'excert_stuff_active', $excert_stuff_active );
+			
 			if ( isset( $_POST[ 'excert_stuff_excerpt_text' ] ) ) 
 				 $excert_stuff_excerpt_text = filter_var ( wp_unslash( $_POST[ 'excert_stuff_excerpt_text' ] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ); 
 			else $excert_stuff_excerpt_text = 'Read More';
 			update_option( 'excert_stuff_excerpt_text', $excert_stuff_excerpt_text );
+			
+			if ( isset( $_POST[ 'excert_stuff_excerpt_padding' ] ) ) 
+				$excert_stuff_excerpt_padding = filter_var ( wp_unslash( $_POST[ 'excert_stuff_excerpt_padding' ] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+			else $excert_stuff_excerpt_padding = '4';
+			update_option( 'excert_stuff_excerpt_padding', $excert_stuff_excerpt_padding);
+			
 			echo '<div class="updated"><p><strong>' . esc_html( 'Settings saved.' ) . '</strong></p></div>';
 		}
 	?>
@@ -181,18 +193,20 @@ class Excerpt_Stuff_Admin {
 						</td>
 			   		</tr>
 					<tr class="excert_stuff_setting">
-						<th><label><?php esc_html_e( " Excert Text Padding", 'excert-stuff' ); ?></label></th>
-						<td><select name="Excerpt Text Padding">
-							<option value="padding_9">..</option>
-  							<option value="padding_0">__</option>
-  							<option value="padding_1">==</option>
-  							<option value="padding_2">--</option>
-  							<option value="padding_3">**</option>
-  							<option value="padding_4">$$</option>
-							<option value="padding_5">##</option>
-  							<option value="padding_6">%%</option>
-							<option value="padding_7">++</option>
-  							<option value="padding_8">>></option>
+						<th><label><?php esc_html_e( " Excert Text Padding (Replace Space in Text)", 'excert-stuff' ); ?></label></th>
+						<td><select id="excert_stuff_excerpt_padding" name="excert_stuff_excerpt_padding"
+							>
+							
+							<option value="9" <?php echo ($excert_stuff_excerpt_padding=='9' ? 'selected' : ''); ?> >..</option>
+  							<option value="0" <?php echo ($excert_stuff_excerpt_padding=='0' ? 'selected' : ''); ?> >__</option>
+  							<option value="1" <?php echo ($excert_stuff_excerpt_padding=='1' ? 'selected' : ''); ?> >==</option>
+  							<option value="2" <?php echo ($excert_stuff_excerpt_padding=='2' ? 'selected' : ''); ?> >--</option>
+  							<option value="3" <?php echo ($excert_stuff_excerpt_padding=='3' ? 'selected' : ''); ?> >**</option>
+  							<option value="4" <?php echo ($excert_stuff_excerpt_padding=='4' ? 'selected' : ''); ?> >$$</option>
+							<option value="5" <?php echo ($excert_stuff_excerpt_padding=='5' ? 'selected' : ''); ?> >##</option>
+  							<option value="6" <?php echo ($excert_stuff_excerpt_padding=='6' ? 'selected' : ''); ?> >%%</option>
+							<option value="7" <?php echo ($excert_stuff_excerpt_padding=='7' ? 'selected' : ''); ?> >++</option>
+  							<option value="8" <?php echo ($excert_stuff_excerpt_padding=='8' ? 'selected' : ''); ?> >>></option>
 						</select></td>
 						<td>
 							<p class="description"><?php esc_html_e( 'Customize excert text padding', 'excert-stuff' ); ?></p>
