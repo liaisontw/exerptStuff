@@ -110,7 +110,7 @@ class Excerpt_Stuff_Admin {
 
 	public function admin_menu() {
 		add_options_page( 'excerpt Stuff Options', 
-						  'excerpt Stuff', 
+						  'Excerpt Stuff', 
 						  'manage_options', 
 						  'excerpt_stuff_options', 
 						  array(&$this, 'excerpt_stuff_menu_options')				  
