@@ -72,7 +72,7 @@ class Excerpt_Stuff {
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'excerpt-stuff';
+		$this->plugin_name = 'excerpt-customizer';
 
 		$this->load_dependencies();
 		//$this->set_locale();
@@ -103,24 +103,24 @@ class Excerpt_Stuff {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-excerpt-stuff-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-excerpt-customizer-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-excerpt-stuff-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-excerpt-customizer-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-excerpt-stuff-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-excerpt-customizer-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-excerpt-stuff-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-excerpt-customizer-public.php';
 
 		$this->loader = new Excerpt_Stuff_Loader();
 

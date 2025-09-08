@@ -1,0 +1,11 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+#excerpt_stuff label {white-space:nowrap}
+#excerpt_stuff input[type="radio"] {margin-left:15px}
+#excerpt_stuff input[type="radio"]:first-child {margin-left:0}
+#excerpt_stuff .value {display:inline-block;min-width:50px}
+#excerpt_stuff p {font-size:1.1em;font-weight:600}
+@media screen and (max-width: 500px) {#excerpt_stuff label {white-space:normal}}
