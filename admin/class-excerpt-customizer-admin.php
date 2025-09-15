@@ -122,67 +122,91 @@ class Excerpt_Stuff_Admin {
 		$excerpt_stuff_excerpt_text = get_option( 'excerpt_stuff_excerpt_text' );
 		$excerpt_stuff_excerpt_padding = get_option( 'excerpt_stuff_excerpt_padding' );
 		
-		if ( isset($_POST[ 'excerpt_stuff_submit_hidden' ]) && $_POST[ 'excerpt_stuff_submit_hidden' ] == 'Y' ) {
-			if ( isset( $_POST['excerpt_html_nonce'] ) && !wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['excerpt_html_nonce'] ) ), 'excerpt-html-nonce' ) ) {
-				wp_die( esc_html( 'Form failed nonce verification.' ) );
+		if ( current_user_can('manage_options') ) {
+			if ( isset($_POST[ 'excerpt_stuff_submit_hidden' ]) && $_POST[ 'excerpt_stuff_submit_hidden' ] == 'Y' ) 
+			{
+				if (   isset( $_POST['excerpt_stuff_nonce'] ) 
+				    && wp_verify_nonce( sanitize_text_field( 
+					   wp_unslash( $_POST['excerpt_stuff_nonce'] ) ), 'excerpt-stuff-nonce' ) ) 
+				{
+					if ( isset( $_POST[ 'excerpt_stuff_active' ] ) ) 
+					{
+						$excerpt_stuff_active = filter_var ( 
+							wp_unslash( $_POST[ 'excerpt_stuff_active' ] ), 
+							FILTER_SANITIZE_FULL_SPECIAL_CHARS ); 
+					} else {
+						$excerpt_stuff_active = 'yes';
+					}				
+					
+					if (   isset( $_POST[ 'excerpt_stuff_excerpt_text' ]) 
+						&& !empty( $_POST[ 'excerpt_stuff_excerpt_text' ]) ) 
+					{
+						$excerpt_stuff_excerpt_text = filter_var ( 
+							wp_unslash( $_POST[ 'excerpt_stuff_excerpt_text' ] ), 
+							FILTER_SANITIZE_FULL_SPECIAL_CHARS ); 
+					} else {
+						$excerpt_stuff_excerpt_text = get_option( 'excerpt_stuff_excerpt_text' );
+					}
+					
+					if ( isset( $_POST[ 'excerpt_stuff_excerpt_padding' ] ) ) 
+					{
+						$excerpt_stuff_excerpt_padding = filter_var ( 
+							wp_unslash( $_POST[ 'excerpt_stuff_excerpt_padding' ] ), 
+							FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+					} else {
+						$excerpt_stuff_excerpt_padding = '..';
+					}
+					
+					update_option( 'excerpt_stuff_active', $excerpt_stuff_active );
+					update_option( 'excerpt_stuff_excerpt_text', $excerpt_stuff_excerpt_text );
+					update_option( 'excerpt_stuff_excerpt_padding', $excerpt_stuff_excerpt_padding);
+					
+					echo '<div class="updated"><p><strong>' . esc_html( 'Settings saved.' ) . '</strong></p></div>';
+				} else {
+					wp_die( esc_html( 'Form failed nonce verification.' ) );
+				}
 			}
-			if ( isset( $_POST[ 'excerpt_stuff_active' ] ) ) 
-				$excerpt_stuff_active = filter_var ( wp_unslash( $_POST[ 'excerpt_stuff_active' ] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ); 
-			else $excerpt_stuff_active = 'yes';
-			update_option( 'excerpt_stuff_active', $excerpt_stuff_active );
-			
-			if ( isset( $_POST[ 'excerpt_stuff_excerpt_text' ]) && !empty( $_POST[ 'excerpt_stuff_excerpt_text' ]) ) 
-				 $excerpt_stuff_excerpt_text = filter_var ( wp_unslash( $_POST[ 'excerpt_stuff_excerpt_text' ] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS ); 
-			else $excerpt_stuff_excerpt_text = get_option( 'excerpt_stuff_excerpt_text' );
-			update_option( 'excerpt_stuff_excerpt_text', $excerpt_stuff_excerpt_text );
-			
-			if ( isset( $_POST[ 'excerpt_stuff_excerpt_padding' ] ) ) 
-				$excerpt_stuff_excerpt_padding = filter_var ( wp_unslash( $_POST[ 'excerpt_stuff_excerpt_padding' ] ), FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-			else $excerpt_stuff_excerpt_padding = '..';
-			update_option( 'excerpt_stuff_excerpt_padding', $excerpt_stuff_excerpt_padding);
-			
-			echo '<div class="updated"><p><strong>' . esc_html( 'Settings saved.' ) . '</strong></p></div>';
 		}
 	?>
 	
 	<div class="wrap" id="excerpt_stuff">
 		<h2>Excerpt Customzer Settings</h2>
 		<form name="form1" method="post" action="">
-			<input type="hidden" name="excerpt_stuff_nonce" value="<?php echo esc_html( wp_create_nonce('excerpt-html-nonce') ); ?>">
+			<input type="hidden" name="excerpt_stuff_nonce" value="<?php echo esc_html( wp_create_nonce('excerpt-stuff-nonce') ); ?>">
 			<input type="hidden" name="excerpt_stuff_submit_hidden" value="Y">
 			<table border="1" class="form-table" >
 				<tbody>
 					<tr>
 						<td>
-							<p class="description"><?php esc_html_e( 'Option', 'excerpt-customizer' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Option', 'liaison-excerpt-customizer' ); ?></p>
 						</td>
 						<td>
-							<p class="description"><?php esc_html_e( 'Setting', 'excerpt-customizer' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Setting', 'liaison-excerpt-customizer' ); ?></p>
 						</td>
 						<td>
-							<p class="description"><?php esc_html_e( 'Description', 'excerpt-customizer' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Description', 'liaison-excerpt-customizer' ); ?></p>
 						</td>
 					</tr>
 					<tr class="excerpt_stuff_setting">
-						<th><label><?php esc_html_e( " Excerpt Customzer (Setting Appearance of excerpts)", 'excerpt-customizer' ); ?></label></th>
+						<th><label><?php esc_html_e( " Excerpt Customzer (Setting Appearance of excerpts)", 'liaison-excerpt-customizer' ); ?></label></th>
 						<td>
-							<input type="radio" name="excerpt_stuff_active" value="yes"<?php echo ($excerpt_stuff_active=='yes' ? ' checked' : ''); ?>><span class="value"><strong><?php esc_html_e( 'Enable', 'excerpt-customizer' ); ?></strong></span>
-							<input type="radio" name="excerpt_stuff_active" value="no"<?php echo ($excerpt_stuff_active!='yes' ? ' checked' : ''); ?>><span class="value"><?php esc_html_e( 'Disable', 'excerpt-customizer' ); ?></span>
+							<input type="radio" name="excerpt_stuff_active" value="yes"<?php echo ($excerpt_stuff_active=='yes' ? ' checked' : ''); ?>><span class="value"><strong><?php esc_html_e( 'Enable', 'liaison-excerpt-customizer' ); ?></strong></span>
+							<input type="radio" name="excerpt_stuff_active" value="no"<?php echo ($excerpt_stuff_active!='yes' ? ' checked' : ''); ?>><span class="value"><?php esc_html_e( 'Disable', 'liaison-excerpt-customizer' ); ?></span>
 						</td>
 						<td>
-							<p class="description"><?php esc_html_e( 'Enable or disable excerpt Stuff', 'excerpt-customizer' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Enable or disable excerpt Stuff', 'liaison-excerpt-customizer' ); ?></p>
 						</td>
 					</tr>
 					<tr class="excerpt_stuff_setting">
-						<th><label><?php esc_html_e( " Excerpt Text (Retype to validate new setting)", 'excerpt-customizer' ); ?></label></th>
+						<th><label><?php esc_html_e( " Excerpt Text (Retype to validate new setting)", 'liaison-excerpt-customizer' ); ?></label></th>
 						<td><input type="text" id="excerpt_stuff_excerpt_text" name="excerpt_stuff_excerpt_text" 
 							maxlength="50" size="50" value="<?php esc_html( $excerpt_stuff_excerpt_text ); ?>" placeholder="<?php echo 'Retype before submit' ?>"></input></td>
 						<td>
-							<p class="description"><?php esc_html_e( 'Customize excerpt text', 'excerpt-customizer' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Customize excerpt text', 'liaison-excerpt-customizer' ); ?></p>
 						</td>
 			   		</tr>
 					<tr class="excerpt_stuff_setting">
-						<th><label><?php esc_html_e( " Excerpt Text Padding (Replace Space in Text)", 'excerpt-customizer' ); ?></label></th>
+						<th><label><?php esc_html_e( " Excerpt Text Padding (Replace Space in Text)", 'liaison-excerpt-customizer' ); ?></label></th>
 						<td><select id="excerpt_stuff_excerpt_padding" name="excerpt_stuff_excerpt_padding">
 							<option value=".." <?php echo ($excerpt_stuff_excerpt_padding=='..' ? 'selected' : ''); ?> >..</option>
   							<option value="__" <?php echo ($excerpt_stuff_excerpt_padding=='__' ? 'selected' : ''); ?> >__</option>
@@ -196,11 +220,11 @@ class Excerpt_Stuff_Admin {
   							<option value="@@" <?php echo ($excerpt_stuff_excerpt_padding=='@@' ? 'selected' : ''); ?> >@@</option>
 						</select></td>
 						<td>
-							<p class="description"><?php esc_html_e( 'Customize excerpt text padding', 'excerpt-customizer' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Customize excerpt text padding', 'liaison-excerpt-customizer' ); ?></p>
 						</td>
 			   		</tr>
 			<p class="submit">
-				<input type="submit" name="submit" class="button button-primary" value="<?php esc_attr_e( 'Save Changes', 'excerpt-customizer' ) ?>" />
+				<input type="submit" name="submit" class="button button-primary" value="<?php esc_attr_e( 'Save Changes', 'liaison-excerpt-customizer' ) ?>" />
 			</p>
 		</form>
 	</div>

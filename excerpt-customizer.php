@@ -23,7 +23,7 @@
  * Author URI:        https://github.com/liaisontw/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       excerpt-customizer
+ * Text Domain:       liaison-excerpt-customizer
  * Domain Path:       /languages
  */
 
